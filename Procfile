@@ -1,0 +1,1 @@
+web: gunicorn Dentisites.wsgi
