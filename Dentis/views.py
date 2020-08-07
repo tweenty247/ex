@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from django.conf import settings
 from .form import AppointmentModelForm
 
 
@@ -31,14 +32,16 @@ def index(request):
 def contact(request):
     if request.method == "POST":
         message_name = request.POST['message-name']
-        message_email = request.POST['message-email']
+        email_from = settings.EMAIL_HOST_USER
+        # message_email = request.POST['message-email']
         message = request.POST['message']
 
         send_mail(
             message_name,  # subject
             message,  # message
-            message_email,  # from email
-            ['ndipdesmond247@gmail.com', 'ndip2tweenty47@gmail.com'],  # to the riciever it can be more than 1
+            email_from, # message comming from reciever
+            # message_email,  # from email
+            ['ndipdesmond247@gmail.com',],  # to the riciever it can be more than 1
         )
 
         return render(request, 'contact.html', {'message_name': message_name})
